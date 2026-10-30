@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Auvrilo admin</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body class="auth-page">
+  <main class="admin-page">
+    <header class="admin-header">
+      <a class="brand" href="{{ url_for('index') }}" aria-label="Auvrilo home"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5 29 26H3L16 3.5Z"/><path d="m16 12 8 14H8l8-14Z" class="brand-cut"/></svg></span><span class="brand-name">auvrilo<span class="brand-dot">.</span></span></a>
+      <div class="admin-header-actions"><a class="button button-secondary" href="{{ url_for('installation_setup') }}">Installation settings</a><a class="button button-secondary" href="{{ url_for('index') }}">Back to workspace</a></div>
+    </header>
+    <div class="admin-title"><div class="section-kicker">PRIVATE WORKSPACE</div><h1>Admin overview</h1><p>Usage for this Auvrilo installation.</p></div>
+    <section class="admin-stats">
+      <article class="stat-card"><span class="stat-label">Registered users</span><strong>{{ admin_data.total_users }}</strong></article>
+      <article class="stat-card"><span class="stat-label">Sign-ins recorded</span><strong>{{ admin_data.total_visits }}</strong></article>
+    </section>
+    <section class="admin-section"><div class="admin-section-heading"><div><span class="section-kicker">ACCOUNT ACTIVITY</span><h2>Users</h2></div><span>{{ admin_data.users|length }} shown</span></div>
+      <div class="admin-table-wrap"><table class="people-table admin-table"><thead><tr><th>ACCOUNT</th><th>SIGN-INS</th><th>FIRST SEEN</th><th>LAST SEEN</th></tr></thead><tbody>{% for user in admin_data.users %}<tr><td><div class="person-cell"><span class="avatar avatar-indigo">{{ user.name[:2]|upper if user.name else user.email[:2]|upper }}</span><span><strong>{{ user.name or 'Google user' }}</strong><small>{{ user.email }}</small></span></div></td><td>{{ user.visit_count }}</td><td>{{ user.created_at }}</td><td>{{ user.last_seen_at }}</td></tr>{% else %}<tr><td colspan="4" class="admin-empty">No sign-ins recorded yet.</td></tr>{% endfor %}</tbody></table></div>
+    </section>
+  </main>
+</body>
+</html>

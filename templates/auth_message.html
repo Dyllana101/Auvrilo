@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="robots" content="noindex,nofollow">
+  <title>{{ title }} - Auvrilo</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a class="brand auth-brand" href="{{ url_for('index') }}" aria-label="Auvrilo home"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5 29 26H3L16 3.5Z"/><path d="m16 12 8 14H8l8-14Z" class="brand-cut"/></svg></span><span class="brand-name">auvrilo<span class="brand-dot">.</span></span></a>
+    <div class="auth-icon auth-icon-warning">!</div>
+    <div class="section-kicker">ACCOUNT CONNECTION</div>
+    <h1>{{ title }}</h1>
+    <p class="auth-description">{{ message }}</p>
+    <a class="button button-primary" href="{{ url_for('index') }}">Back to Auvrilo</a>
+    <p class="auth-footnote">Live report access requires a configured Google client and Workspace authorization. The sample dashboard is only a preview.</p>
+  </main>
+</body>
+</html>

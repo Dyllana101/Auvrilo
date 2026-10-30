@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Auvrilo - report access, in good order</title>
+  <desc id="description">A clean workspace for managing Looker Studio report permissions.</desc>
+  <rect width="1200" height="630" fill="#f7f8fa"/>
+  <rect width="235" height="630" fill="#fff"/>
+  <path d="M234 0v630" stroke="#eceef1"/>
+  <rect x="30" y="28" width="38" height="38" rx="11" fill="#6759d9"/>
+  <path d="m49 35 14 24H35l14-24Z" fill="#fff"/>
+  <path d="m49 44 9 15H40l9-15Z" fill="#6759d9"/>
+  <text x="79" y="55" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700" fill="#212431">auvrilo<tspan fill="#7667e7">.</tspan></text>
+  <text x="32" y="122" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#a0a2ac">WORKSPACE</text>
+  <rect x="18" y="143" width="198" height="48" rx="10" fill="#f0efff"/>
+  <rect x="35" y="159" width="15" height="15" rx="3" fill="none" stroke="#6759d9" stroke-width="2"/>
+  <text x="63" y="174" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="600" fill="#5a4cc5">Dashboards</text>
+  <text x="35" y="234" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#707381">People</text>
+  <text x="35" y="282" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#707381">Bulk changes</text>
+  <text x="285" y="82" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#8176d1">YOUR ACCESS, AT A GLANCE</text>
+  <text x="285" y="132" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#242633">Report access, in good order.</text>
+  <text x="285" y="164" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#858997">A calmer way to manage Looker Studio sharing.</text>
+  <rect x="285" y="195" width="270" height="105" rx="12" fill="#fff" stroke="#ededf1"/>
+  <text x="307" y="226" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#888a96">Manageable reports</text>
+  <text x="307" y="274" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#212431">08</text>
+  <rect x="570" y="195" width="270" height="105" rx="12" fill="#fff" stroke="#ededf1"/>
+  <text x="592" y="226" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#888a96">People with access</text>
+  <text x="592" y="274" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#212431">12</text>
+  <rect x="855" y="195" width="270" height="105" rx="12" fill="#fff" stroke="#ededf1"/>
+  <text x="877" y="226" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#888a96">Access grants</text>
+  <text x="877" y="274" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#212431">34</text>
+  <text x="285" y="351" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5" fill="#9698a2">YOUR REPORTS</text>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="285" y="372" width="265" height="174" rx="12" fill="#fff" stroke="#ededf1"/>
+    <rect x="305" y="392" width="38" height="38" rx="10" fill="#f1efff"/>
+    <text x="314" y="417" font-size="12" font-weight="700" fill="#7568d5">GO</text>
+    <text x="305" y="462" font-size="11" font-weight="700" letter-spacing="1" fill="#a0a1ab">MARKETING</text>
+    <text x="305" y="486" font-size="17" font-weight="700" fill="#242633">Growth overview</text>
+    <text x="305" y="519" font-size="12" fill="#90929d">3 people  ·  Manage access</text>
+    <rect x="568" y="372" width="265" height="174" rx="12" fill="#fff" stroke="#ededf1"/>
+    <rect x="588" y="392" width="38" height="38" rx="10" fill="#eaf7ef"/>
+    <text x="597" y="417" font-size="12" font-weight="700" fill="#64a27d">RF</text>
+    <text x="588" y="462" font-size="11" font-weight="700" letter-spacing="1" fill="#a0a1ab">FINANCE</text>
+    <text x="588" y="486" font-size="17" font-weight="700" fill="#242633">Revenue &amp; forecast</text>
+    <text x="588" y="519" font-size="12" fill="#90929d">3 people  ·  Manage access</text>
+    <rect x="851" y="372" width="274" height="174" rx="12" fill="#fff" stroke="#ededf1"/>
+    <rect x="871" y="392" width="38" height="38" rx="10" fill="#fff0e9"/>
+    <text x="880" y="417" font-size="12" font-weight="700" fill="#cf8761">CP</text>
+    <text x="871" y="462" font-size="11" font-weight="700" letter-spacing="1" fill="#a0a1ab">MARKETING</text>
+    <text x="871" y="486" font-size="17" font-weight="700" fill="#242633">Campaign performance</text>
+    <text x="871" y="519" font-size="12" fill="#90929d">2 people  ·  Manage access</text>
+  </g>
+  <text x="285" y="590" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#a1a3ac">Auvrilo  ·  Open-source permission management</text>
+</svg>

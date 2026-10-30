@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <meta name="description" content="A clear, safe workspace for managing Looker Studio report access.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Auvrilo - report access, in good order">
+  <meta property="og:description" content="Manage report sharing with a calmer, clearer workflow.">
+  <meta property="og:image" content="{{ config['PUBLIC_BASE_URL'].rstrip('/') }}{{ url_for('static', filename='images/social-preview.png') }}">
+  <meta property="og:image:alt" content="Auvrilo report access dashboard">
+  <meta property="og:image:type" content="image/png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Auvrilo - report access, in good order">
+  <meta name="twitter:description" content="Manage report sharing with a calmer, clearer workflow.">
+  <meta name="twitter:image" content="{{ config['PUBLIC_BASE_URL'].rstrip('/') }}{{ url_for('static', filename='images/social-preview.png') }}">
+  <title>Auvrilo - access, in good order</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/access-results.css') }}">
+</head>
+<body data-authenticated="{{ 'true' if current_user else 'false' }}" data-current-user="{{ current_user.email if current_user else '' }}">
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Auvrilo home">
+        <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5 29 26H3L16 3.5Z"/><path d="m16 12 8 14H8l8-14Z" class="brand-cut"/></svg></span>
+        <span class="brand-name">auvrilo<span class="brand-dot">.</span></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-page="dashboards"><span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg></span>Dashboards<span class="nav-count" id="navDashboardCount">8</span></button>
+        <button class="nav-link" data-page="users"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>People<span class="nav-count" id="navUserCount">12</span></button>
+        <button class="nav-link" data-page="bulk"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span>Bulk changes</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <span class="help-orb"><svg viewBox="0 0 24 24"><path d="M12 18h.01M9.1 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="12" r="9"/></svg></span>
+          <strong>Need a hand?</strong>
+          <p>We’ll help you get set up.</p>
+          <button class="text-button" id="helpButton">Visit the guide <span aria-hidden="true">↗</span></button>
+        </div>
+        <button class="profile-button" id="profileButton">
+          <span class="avatar avatar-indigo">{{ current_user.name[:2]|upper if current_user else 'DA' }}</span><span class="profile-copy"><strong>{{ current_user.name if current_user else 'Demo User' }}</strong><small>{{ current_user.email if current_user else 'owner@example.com' }}</small></span><span class="chevron">⌄</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong id="breadcrumbCurrent">Dashboards</strong></div>
+        <div class="topbar-right">
+          <div class="sync-status"><span class="status-dot"></span><span id="syncText">Sample data</span></div>
+          <button class="icon-button" id="syncButton" aria-label="Sync data" title="Sync data"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9a7 7 0 0 1 11.55-2L20 12M4 12l2.85 5a7 7 0 0 0 11.55-2"/></svg></button>
+          <span class="topbar-divider"></span>
+          {% if current_user %}<a class="google-pill" href="{{ url_for('credentials') }}" id="connectionButton"><span class="google-g">G</span><span>{{ current_user.email }}</span><span class="connection-dot"></span></a>{% elif installation_configured %}<a class="google-pill" href="{{ url_for('auth_start') }}" id="connectionButton"><span class="google-g">G</span><span>Continue with Google</span></a>{% else %}<a class="google-pill" href="{{ url_for('installation_setup') }}" id="connectionButton"><span class="google-g">G</span><span>Set up Auvrilo</span></a>{% endif %}
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="welcome-row">
+          <div><div class="eyebrow"><span class="eyebrow-line"></span>YOUR ACCESS, AT A GLANCE</div><h1 id="pageTitle">A clearer view of your dashboards.</h1><p class="page-subtitle" id="pageSubtitle">Everything you can manage, all in one place.</p></div>
+          <button class="button button-primary" id="openBulkButton"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Bulk change</button>
+        </section>
+
+        <section class="stats-grid" aria-label="Workspace overview">
+          <article class="stat-card"><div class="stat-top"><span class="stat-label">Manageable dashboards</span><span class="stat-symbol symbol-lavender"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg></span></div><div class="stat-value" id="statDashboards">8</div><div class="stat-foot"><span class="stat-hint">Reports you own or edit</span><span class="stat-trend">↗&nbsp; All accessible</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-label">People with access</span><span class="stat-symbol symbol-mint"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div><div class="stat-value" id="statUsers">12</div><div class="stat-foot"><span class="stat-hint">Across all dashboards</span><span class="stat-trend trend-neutral" id="userTrendText">↔&nbsp; 2 added this month</span></div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-label">Access grants</span><span class="stat-symbol symbol-peach"><svg viewBox="0 0 24 24"><path d="M12 15V3m0 0L7 8m5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></span></div><div class="stat-value" id="statGrants">34</div><div class="stat-foot"><span class="stat-hint">Editors and viewers</span><span class="stat-trend trend-neutral" id="grantReportsFoot">Across 8 reports</span></div></article>
+        </section>
+
+        <section class="content-section" id="dashboardSection">
+          <div class="section-heading"><div><div class="section-kicker">YOUR WORKSPACE</div><h2>Your dashboards <span class="heading-count" id="headingDashboardCount">08</span></h2></div><button class="button button-secondary" id="inviteButton"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/></svg>Invite people</button></div>
+          <div class="toolbar"><label class="search-field"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="dashboardSearch" type="search" placeholder="Search dashboards" autocomplete="off"><kbd>/</kbd></label><div class="filter-wrap"><button class="filter-button" id="sortButton"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10m-7 5h4"/></svg>Recently updated<span class="small-chevron">⌄</span></button><div class="sort-menu hidden" id="sortMenu"><button data-sort="recent">Recently updated</button><button data-sort="az">Name A–Z</button><button data-sort="access">Most access</button></div></div><span class="result-count" id="resultCount">8 dashboards</span></div>
+          <div class="dashboard-grid" id="dashboardGrid"></div>
+          <div class="empty-state hidden" id="emptyDashboards"><span class="empty-icon">⌕</span><strong>No dashboards found</strong><p>Try a different name or search term.</p></div>
+        </section>
+
+        <section class="content-section hidden" id="usersSection">
+          <div class="section-heading"><div><div class="section-kicker">ACCESS DIRECTORY</div><h2>People <span class="heading-count" id="headingPeopleCount">12</span></h2></div><button class="button button-secondary" id="inviteUsersButton"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/></svg>Invite people</button></div>
+          <div class="toolbar"><label class="search-field"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="userSearch" type="search" placeholder="Search by name, email, or dashboard" autocomplete="off"><kbd>/</kbd></label><button class="filter-button" id="roleFilter"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 12h10m-7 5h4"/></svg>All roles<span class="small-chevron">⌄</span></button></div>
+          <div class="people-table-wrap"><table class="people-table"><thead><tr><th><input type="checkbox" id="selectAllPeople" aria-label="Select all people"></th><th>PERSON</th><th>ROLE</th><th>DASHBOARDS</th><th>LAST UPDATED</th><th></th></tr></thead><tbody id="peopleTableBody"></tbody></table></div>
+          <div class="empty-state hidden" id="emptyPeople"><span class="empty-icon">⌕</span><strong>No people found</strong><p>Try another name or email address.</p></div>
+          <div class="selection-bar hidden" id="peopleSelectionBar"><span><strong id="selectedCount">0</strong> people selected</span><button class="text-button danger-text" id="revokeSelectedButton">Revoke access</button><button class="selection-close" id="clearSelection" aria-label="Clear selection">×</button></div>
+        </section>
+
+        <section class="content-section hidden" id="bulkSection">
+          <div class="section-heading"><div><div class="section-kicker">ONE ACTION, EVERYWHERE</div><h2>Make a bulk change</h2></div></div>
+          <div class="bulk-layout">
+            <div class="bulk-main">
+              <div class="bulk-step"><div class="step-heading"><span class="step-number">01</span><div><h3>Choose people</h3><p>Add email addresses or select people already in your workspace.</p></div></div><textarea id="bulkEmails" placeholder="name@company.com, another@company.com"></textarea><button class="text-button add-existing" id="addExistingButton">＋ Choose from existing people</button><div class="selected-chips" id="selectedPeopleChips"></div></div>
+              <div class="bulk-step"><div class="step-heading"><span class="step-number">02</span><div><h3>Choose dashboards</h3><p>Select the reports this change should apply to.</p></div></div><div class="bulk-dashboard-list" id="bulkDashboardList"></div><button class="text-button" id="toggleDashboards">Select all dashboards</button></div>
+              <div class="bulk-step"><div class="step-heading"><span class="step-number">03</span><div><h3>Choose an action</h3><p>Owners are always protected from changes.</p></div></div><div class="action-options"><label class="action-option"><input type="radio" name="bulkAction" value="viewer" checked><span class="radio-ui"></span><span><strong>Grant viewer access</strong><small>Can view reports, cannot edit them</small></span></label><label class="action-option"><input type="radio" name="bulkAction" value="editor"><span class="radio-ui"></span><span><strong>Grant editor access</strong><small>Can view and make changes</small></span></label><label class="action-option action-remove"><input type="radio" name="bulkAction" value="remove"><span class="radio-ui"></span><span><strong>Remove all access</strong><small>People will no longer see these reports</small></span></label></div></div>
+            </div>
+            <aside class="bulk-summary"><div class="summary-icon"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><h3>Before you apply</h3><p>Your changes will be reviewed before anything is updated.</p><div class="math-line"><span id="mathPeople">0 people</span><span>×</span><span id="mathDashboards">0 dashboards</span></div><div class="change-total"><strong id="changeTotal">0</strong><span>potential changes</span></div><div class="summary-note"><span>ⓘ</span><span>Dashboard owners are never affected. You’ll see a result for each report.</span></div><button class="button button-primary button-full" id="reviewBulkButton" disabled>Review changes <span>→</span></button><small class="demo-note" id="workspaceNotice">Demo mode - changes stay in this browser.</small></aside>
+          </div>
+        </section>
+
+        <footer class="page-footer"><span>Made for calmer access management.</span><span><span class="footer-dot"></span> <span id="workspaceModeLabel">Demo workspace</span> <span class="footer-divider">·</span> Auvrilo <span class="footer-divider">·</span> <a class="footer-link" id="privacyButton" href="{{ url_for('privacy') }}">Privacy</a>{% if is_admin %}<span class="footer-divider">·</span><a class="footer-link" href="{{ url_for('admin') }}">Admin</a>{% endif %}</span></footer>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="modalContent"></section>
+  </div>
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>

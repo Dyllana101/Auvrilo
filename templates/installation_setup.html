@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Installation setup - Auvrilo</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body class="auth-page">
+  <main class="auth-card auth-card-wide">
+    <a class="brand auth-brand" href="{{ url_for('index') }}" aria-label="Auvrilo home"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5 29 26H3L16 3.5Z"/><path d="m16 12 8 14H8l8-14Z" class="brand-cut"/></svg></span><span class="brand-name">auvrilo<span class="brand-dot">.</span></span></a>
+    <div class="section-kicker">INSTALLATION SETUP</div>
+    <h1>{{ 'Google connection settings' if not setup_key_required else 'Set up this Auvrilo installation' }}</h1>
+    {% if saved %}<div class="auth-success"><span class="status-dot"></span>Installation settings saved. The Google client secret is encrypted in the server database.</div>{% endif %}
+    <p class="auth-description">Enter the installation's Google OAuth client and the Workspace account that will administer this Auvrilo instance. The client secret is encrypted with the server's AUVRILO_ENCRYPTION_KEY.</p>
+    <div class="auth-requirement"><strong>Keep server keys out of the browser</strong><span>Auvrilo generates session and encryption keys in the private, Git-ignored instance/keys.json file unless you provide host-level overrides. They protect sessions and stored credentials and are never entered here. Run `flask --app app setup-code` in the server terminal to get the first-run code.</span></div>
+    {% if error %}<div class="auth-error" role="alert">{{ error }}</div>{% endif %}
+    <details class="auth-guide"><summary>Where do I get the installation OAuth client?</summary><ol><li>Create or select a Google Cloud project for this Auvrilo installation.</li><li>Configure the OAuth consent screen with the app name and contact information.</li><li>Create a Web application OAuth client.</li><li>Add this authorized redirect URI: <code>{{ identity_callback_uri }}</code></li><li>Copy the client ID and secret here. Each user will later add their own Data Studio OAuth client in their account settings.</li></ol></details>
+    <form method="post" action="{{ url_for('installation_setup') }}" autocomplete="off">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      {% if setup_key_required %}<label class="auth-label" for="setup_key">One-time setup key</label><input class="auth-input" type="password" id="setup_key" name="setup_key" autocomplete="off" required>{% endif %}
+      <label class="auth-label" for="client_id">Installation OAuth client ID</label>
+      <input class="auth-input" type="text" id="client_id" name="client_id" value="{{ client_id }}" placeholder="123456789.apps.googleusercontent.com" minlength="8" maxlength="300" required autocomplete="off" spellcheck="false">
+      <label class="auth-label" for="client_secret">Installation OAuth client secret</label>
+      <input class="auth-input" type="password" id="client_secret" name="client_secret" placeholder="{{ 'Leave blank to keep the current secret' if not setup_key_required else 'Paste the client secret' }}" minlength="8" maxlength="500" {% if setup_key_required %}required{% endif %} autocomplete="new-password">
+      <label class="auth-label" for="admin_email">Installation admin email</label>
+      <input class="auth-input" type="email" id="admin_email" name="admin_email" value="{{ admin_email }}" placeholder="admin@your-workspace.com" required autocomplete="email">
+      <p class="auth-help">The installation identity client uses <code>{{ identity_callback_uri }}</code>. A user's separate Data Studio client uses the callback shown on their account setup page.</p>
+      <button class="button button-primary auth-submit" type="submit">Save installation settings</button>
+    </form>
+    <p class="auth-footnote">First-run setup is protected by the code printed by `flask --app app setup-code`. The code is derived from the private key file and is not stored in the database. Changes take effect in this process; restart multi-worker deployments after saving.</p>
+  </main>
+</body>
+</html>

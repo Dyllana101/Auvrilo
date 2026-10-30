@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fa">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Privacy - Auvrilo</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body class="auth-page">
+  <main class="auth-card auth-card-wide privacy-card">
+    <a class="brand auth-brand" href="{{ url_for('index') }}" aria-label="Auvrilo home"><span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5 29 26H3L16 3.5Z"/><path d="m16 12 8 14H8l8-14Z" class="brand-cut"/></svg></span><span class="brand-name">auvrilo<span class="brand-dot">.</span></span></a>
+    <div class="section-kicker">PRIVACY</div>
+    <h1>Your data stays with this installation.</h1>
+    <p class="auth-description">Auvrilo is open-source software. This page is a summary for the operator's installation and should be reviewed and updated before public deployment.</p>
+    <div class="privacy-copy">
+      <h2>Data Auvrilo stores</h2>
+      <ul><li>Your Google account identifier, email, name, sign-in count, and last sign-in time.</li><li>Your OAuth client secret and access/refresh tokens, encrypted in the installation's database.</li><li>Reports and permission details fetched from Google. The browser keeps a per-account IndexedDB cache until you sign out.</li></ul>
+      <h2>How it is used</h2>
+      <p>OAuth tokens are sent from this server to Google to load or change Data Studio permissions. They are not sent to browser JavaScript. The installation administrator can see account records.</p>
+      <h2>Retention and deletion</h2>
+      <p>Signing out clears the local browser cache but leaves your saved connection on the server. Use account settings to forget saved OAuth credentials or delete your Auvrilo account and locally stored data. Deletion attempts to revoke the Google token; you can also review connected apps in your Google Account.</p>
+      <h2>Installation operator</h2>
+      <p>This Auvrilo instance is operated by <strong>{{ admin_email or 'the person who deployed this instance' }}</strong>. The operator controls the database, encryption keys, backups, and retention. This source repository does not send data to a shared Auvrilo service.</p>
+    </div>
+    <a class="button button-secondary" href="{{ url_for('index') }}">Back to Auvrilo</a>
+  </main>
+</body>
+</html>
